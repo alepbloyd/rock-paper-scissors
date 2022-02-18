@@ -1,3 +1,10 @@
+let playerWins = 0;
+let computerWins = 0;
+let playerSelection;
+let computerSelection;
+
+const resultsDiv = document.querySelector(`#resultsDiv`);
+
 function computerPlay() {
     let randomNumber = (Math.random()*100)+1;
 
@@ -10,14 +17,11 @@ function computerPlay() {
     }
 }
 
-let playerWins = 0;
-let computerWins = 0;
-let playerSelection;
-let computerSelection;
+
 
 function playRound(playerSelection, computerSelection) {
-    playerSelection = prompt(`Rock, paper, scissors?`).toLowerCase();
-    computerSelection = computerPlay();
+    // console.log(playerSelection);
+    // console.log(computerSelection);
     if (playerSelection == computerSelection) {
         return "Whoa baby that's a tie";
     } else if (playerSelection == "rock") {
@@ -49,24 +53,48 @@ function playRound(playerSelection, computerSelection) {
     }
 }
 
-function game() {
-    playerWins = 0;
-    computerWins = 0;
+const buttons = document.querySelectorAll('button');
+buttons.forEach((button) => {
+    button.addEventListener('click', () => {
+        // alert(button.id);
+        playerSelection = button.textContent.toLowerCase();
+        computerSelection = computerPlay();
+        playRound(playerSelection,computerSelection);
+        if (playerWins == 5) {
+            // resultsDiv.appendChild(`Player Wins!`);
+            resultsDiv.textContent= `Player Wins!`;
+        } else if (computerWins == 5) {
+            // resultsDiv.appendChild('Computer Wins!');
+            resultsDiv.textContent= `Computer Wins!`;
+        } else {
+            const WinDisplay = document.createElement('div');
+            WinDisplay.textContent = `Player wins: ${playerWins}, Computer wins: ${computerWins}`;
+            resultsDiv.appendChild(WinDisplay);
+        }
+        // console.log(playRound(playerSelection,computerSelection));
+    });
+});
 
-    console.log(playRound(playerSelection, computerSelection));
-    console.log(`After one round, player has ${playerWins} wins and computer has ${computerWins} wins`);
 
-    console.log(playRound(playerSelection, computerSelection));
-    console.log(`After two rounds, player has ${playerWins} wins and computer has ${computerWins} wins`);
-    
-    console.log(playRound(playerSelection, computerSelection));
-    console.log(`After three rounds, player has ${playerWins} wins and computer has ${computerWins} wins`);
 
-    console.log(playRound(playerSelection, computerSelection));
-    console.log(`After four rounds, player has ${playerWins} wins and computer has ${computerWins} wins`);
 
-    console.log(playRound(playerSelection, computerSelection));
-    console.log(`After five rounds, player has ${playerWins} wins and computer has ${computerWins} wins`);
-}
+// const playerWinCount = document.createElement('div');
+// playerWinCount.textContent = `${playerWins}`
+// playerWinDisplay.appendChild(playerWinCount);
+// const computerWinCount = document.createElement('div');
+// computerWinCount.textContent = `${computerWins}`;
+// computerWinDisplay.appendChild(computerWinCount);
 
-game();
+// function game() {
+//     playerWins = 0;
+//     computerWins = 0;
+
+//     for (let i = 0; i > 5; i++) {
+//         console.log(playRound(playerSelection, computerSelection));
+//         console.log(`After ${i+1} rounds, player has ${playerWins} wins and computer has ${computerWins} wins`);
+//     }
+
+
+// }
+
+// game();
